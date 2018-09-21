@@ -2,6 +2,12 @@
   font-family: Arial, sans-serif;
 }
 
+:focus { outline: none !important; }
+:focus::-webkit-input-placeholder { color: transparent }
+:focus::-moz-placeholder { color: transparent }
+:focus:-moz-placeholder { color: transparent }
+:focus:-ms-input-placeholder { color: transparent }
+
 body{
   background-color: #35383f;
 	padding: 0;
@@ -16,7 +22,7 @@ body{
 .row {
   background-color: #2b2d33;
   width: 272px;
-  padding-bottom: 58px;
+  padding-bottom: 46px;
   display:inline-block;
   vertical-align: top;
   position: relative;
@@ -69,7 +75,6 @@ body{
   color: white;
 }
 
-
 .delete {
   position: absolute;
   top: 3px;
@@ -115,13 +120,137 @@ body{
   opacity: 1;
 }
 
-.add-another-card {
+.card-title-textarea {
+  resize: none;
+  width: 230px;
+  border: none;
+  margin: 10px;
+  padding: 10px;
+  color: #cfcfcf;
+  background-color: #4f4f4f;
+  border: 1px solid #4f4f4f;
+}
+
+.card-title-textarea::-webkit-input-placeholder {
+color: #9f9f9f;
+}
+
+.card-title-textarea:-moz-placeholder {
+color: #9f9f9f;  
+}
+
+.card-title-textarea::-moz-placeholder {
+color: #9f9f9f;  
+}
+
+.card-title-textarea:-ms-input-placeholder {
+color: #9f9f9f;  
+}
+
+.add-a-card {
   position: absolute;
   bottom: 15px;
   left: 10px;
-  padding: 5px 10px;
+  padding: 5px;
+  width: 170px;
   font-size: 14px;
+  color: #cfcfcf;
+  background-color: #616161;
+  border: 1px solid #616161;
+  cursor: pointer;
+}
+
+.add-a-card:hover {
   color: #cdcdcd;
+  background-color: #504f4f;
+  border: 1px solid #504f4f;
+}
+
+.add-a-card:active{
+  color: #cacaca;
   background-color: #454545;
   border: 1px solid #454545;
+}
+
+.cancel {
+  position: relative;
+  position: absolute;
+  bottom: 15px;
+  left: 190px;
+  background-color: transparent;
+  border: none;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.cancel:before,
+.cancel:after {
+  background-color: white;
+  position: absolute;
+  top: 13px;
+  left: 5px;
+  content: "";
+  display: block;
+  width: 18px;
+  height: 2px;
+}
+
+.cancel:before {
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.cancel:after {
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.cancel:hover {
+  opacity: 1;
+}
+
+.add-another-card {
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  padding: 10px 36px;
+  position: absolute;
+  bottom: 0;
+  text-align: left;
+  color: #757577;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.add-another-card:before,
+.add-another-card:after {
+  background-color: #757577;
+  position: absolute;
+  bottom: 16px;
+  left: 10px;
+  content: "";
+  display: block;
+  width: 14px;
+  height: 2px;
+}
+
+.add-another-card:before {
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.add-another-card:hover {
+  color: #878792;
+  background-color: #222328;
 }

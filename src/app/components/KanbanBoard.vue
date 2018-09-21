@@ -11,7 +11,10 @@
 					</div>
 				</Draggable>
 			</Container>
-			<button class="add-another-card" @click="addItem('items0')">Добавить карточку</button>
+			<textarea id="title0" class="card-title-textarea" rows="5" placeholder="Ввести заголовок для этой карточки" v-model="newCardHeader" v-bind:style="addACardStyle[0]"></textarea>
+			<button class="add-a-card" @click="addItem('items0')" v-bind:style="addACardStyle[0]">Добавить карточку</button>
+			<button class="cancel" @click="hideAddACardTextarea()" v-bind:style="addACardStyle[0]"></button>
+			<button class="add-another-card" @click="showAddACardTextarea(0)" v-bind:style="addAnotherCardStyle[0]">Добавить карточку</button>
 		</div>
 		<div class="row">
 			<h3 class="header blue">In Progress ({{items1.length}})</h3>
@@ -24,7 +27,10 @@
 					</div>
 				</Draggable>
 			</Container>
-			<button class="add-another-card" @click="addItem('items1')">Добавить карточку</button>
+			<textarea id="title1" class="card-title-textarea" rows="5" placeholder="Ввести заголовок для этой карточки" v-model="newCardHeader" v-bind:style="addACardStyle[1]"></textarea>
+			<button class="add-a-card" @click="addItem('items1')" v-bind:style="addACardStyle[1]">Добавить карточку</button>
+			<button class="cancel" @click="hideAddACardTextarea()" v-bind:style="addACardStyle[1]"></button>
+			<button class="add-another-card" @click="showAddACardTextarea(1)" v-bind:style="addAnotherCardStyle[1]">Добавить карточку</button>
 		</div>
 		<div class="row">
 			<h3 class="header yellow">Needs Review ({{items2.length}})</h3>
@@ -37,7 +43,10 @@
 					</div>
 				</Draggable>
 			</Container>
-			<button class="add-another-card" @click="addItem('items2')">Добавить карточку</button>
+			<textarea id="title2" class="card-title-textarea" rows="5" placeholder="Ввести заголовок для этой карточки" v-model="newCardHeader" v-bind:style="addACardStyle[2]"></textarea>
+			<button class="add-a-card" @click="addItem('items2')" v-bind:style="addACardStyle[2]">Добавить карточку</button>
+			<button class="cancel" @click="hideAddACardTextarea()" v-bind:style="addACardStyle[2]"></button>
+			<button class="add-another-card" @click="showAddACardTextarea(2)" v-bind:style="addAnotherCardStyle[2]">Добавить карточку</button>
 		</div>
 		<div class="row">
 			<h3 class="header green">Approved ({{items3.length}})</h3>
@@ -50,7 +59,10 @@
 					</div>
 				</Draggable>
 			</Container>
-			<button class="add-another-card" @click="addItem('items3')">Добавить карточку</button>
+			<textarea id="title3" class="card-title-textarea" rows="5" placeholder="Ввести заголовок для этой карточки" v-model="newCardHeader" v-bind:style="addACardStyle[3]"></textarea>
+			<button class="add-a-card" @click="addItem('items3')" v-bind:style="addACardStyle[3]">Добавить карточку</button>
+			<button class="cancel" @click="hideAddACardTextarea()" v-bind:style="addACardStyle[3]"></button>
+			<button class="add-another-card" @click="showAddACardTextarea(3)" v-bind:style="addAnotherCardStyle[3]">Добавить карточку</button>
 		</div>
 	</div>
 </template>
@@ -66,11 +78,25 @@ export default {
 			items0: loadItems('items0'),
 			items1: loadItems('items1'),
 			items2: loadItems('items2'),
-			items3: loadItems('items3')
+			items3: loadItems('items3'),
+			newCardHeader: '',
+			addACardStyle: [ 
+					{ display: 'none'},
+					{ display: 'none'},
+					{ display: 'none'},
+					{ display: 'none'}
+				],
+			addAnotherCardStyle: [ 
+					{ display: 'block'},
+					{ display: 'block'},
+					{ display: 'block'},
+					{ display: 'block'}
+				]
 		};
 	},
 	methods: {
 		onDrop: function(collection, dropResult) {
+			this.hideAddACardTextarea();
 			this[collection] = applyDrag(this[collection], dropResult);
 			saveItems(collection, this[collection]);
 		},
@@ -87,24 +113,40 @@ export default {
 			return this.items3[index];
 		},
 		addItem: function(collection) {
-			const newHeader = prompt('Введите заголовок для этой карточки', '');
-			if (newHeader) {
+			if (this.newCardHeader) {
 				const d = new Date();
 				const newID = d.getTime();
-				this[collection].push({ id: newID, header: newHeader });
+				this[collection].push({ id: newID, header: this.newCardHeader });
 				saveItems(collection, this[collection]);
+				this.hideAddACardTextarea();
 			}
 		},
 		deleteItem: function(collection, item) {
-			var index = this[collection].map(x => {
+			let index = this[collection].map(x => {
 				return x.id;
 			}).indexOf(item.id);
 			this[collection].splice(index, 1);
 			saveItems(collection, this[collection]);
+		},
+		hideAddACardTextarea: function() {
+			this.newCardHeader = '';
+			for(let i = 0; i < this.addACardStyle.length; i++) {
+				this.addACardStyle[i].display = 'none';
+			}
+			for(let i = 0; i < this.addAnotherCardStyle.length; i++) {
+				this.addAnotherCardStyle[i].display = 'block';
+			}
+		},
+		showAddACardTextarea: function(col) {
+			this.hideAddACardTextarea();
+			this.addAnotherCardStyle[col].display = 'none';
+			this.addACardStyle[col].display = 'block';
+			let textareaID = 'title' + col;
+
+			setTimeout(function() {
+				document.getElementById(textareaID).focus();
+			}, 0);
 		}
 	}
 };
 </script>
-
-
-
